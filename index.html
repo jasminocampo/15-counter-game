@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>15 Counter Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-card">
+    <div class="ornament">✦ &nbsp; THE LITTLE GAME ROOM &nbsp; ✦</div>
+    <p class="eyebrow">A CLASSIC NUMBER CHALLENGE</p>
+    <h1>15 Counter Game</h1>
+    <p class="subtitle">A little strategy goes a long way.</p>
+
+    <section class="score-panel" aria-live="polite">
+      <p class="remaining-label">COUNTERS REMAINING</p>
+      <div id="remaining" class="remaining">15</div>
+      <div id="counter-pile" class="counter-pile" aria-label="15 counters"></div>
+    </section>
+
+    <p id="status" class="status">Your turn. Choose how many counters to take.</p>
+
+    <div class="actions">
+      <button class="take-button" data-take="1">Take 1</button>
+      <button class="take-button" data-take="2">Take 2</button>
+      <button class="take-button" data-take="3">Take 3</button>
+    </div>
+
+    <div class="bottom-row">
+      <span class="turn-label">PLAYER <b>VS</b> COMPUTER</span>
+      <button id="restart" class="restart-button">↻ Play Again</button>
+    </div>
+    <p id="result" class="result" hidden></p>
+    <div class="rule">
+      <span class="rule-title">THE RULE</span>
+      Take 1, 2, or 3 counters on your turn. Whoever takes the last counter wins.
+    </div>
+    <footer>✧ &nbsp; EST. FOR FUN &nbsp; ✧</footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
