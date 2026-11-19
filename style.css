@@ -1,78 +1,165 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap');
 
-:root {
-  --plum: #4c3158;
-  --deep: #33213d;
-  --purple: #76557f;
-  --lavender: #d8c5d9;
-  --paper: #f4ecdf;
-  --ink: #3d2d3e;
-  --muted: #806f7e;
-  --gold: #b18b56;
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap');
+
+* {
+    box-sizing: border-box;
 }
-* { box-sizing: border-box; }
+
 body {
-  margin: 0; min-height: 100vh; display: grid; place-items: center;
-  padding: 28px 16px; color: var(--ink);
-  background:
-    radial-gradient(circle at 15% 18%, rgba(255,255,255,.08) 0 1px, transparent 2px),
-    radial-gradient(circle at 80% 70%, rgba(255,255,255,.07) 0 1px, transparent 2px),
-    linear-gradient(135deg, #382541, #65466b 55%, #382541);
-  font-family: 'DM Sans', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    font-family: 'DM Sans', sans-serif;
+    background: linear-gradient(135deg, #34263f, #765b78, #48334f);
+    color: #49384d;
 }
+
 .game-card {
-  width: min(100%, 510px); position: relative; overflow: hidden;
-  padding: 34px 34px 25px; text-align: center;
-  background: var(--paper); border: 1px solid #d6c4a8;
-  border-radius: 8px; box-shadow: 0 22px 65px rgba(15, 8, 20, .38);
+    width: 100%;
+    max-width: 650px;
+    padding: 40px 30px;
+    text-align: center;
+    background: #f7f0e5;
+    border: 3px double #b69a78;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px #21162980;
 }
-.game-card::before {
-  content: ""; position: absolute; inset: 10px; pointer-events: none;
-  border: 1px solid rgba(177,139,86,.65);
+
+.ornament {
+    color: #92709a;
+    letter-spacing: 3px;
+    font-size: 13px;
 }
-.ornament, footer { color: var(--gold); font-size: 10px; letter-spacing: 3px; }
-.eyebrow { margin: 22px 0 5px; color: var(--purple); font-size: 10px; letter-spacing: 3px; }
+
+.eyebrow {
+    letter-spacing: 3px;
+    font-size: 11px;
+    color: #9b8064;
+}
+
 h1 {
-  margin: 0; color: var(--deep); font: 600 clamp(38px, 8vw, 52px)/1 'Cormorant Garamond', serif;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 52px;
+    margin: 10px 0;
+    color: #573d61;
 }
-.subtitle { margin: 9px 0 23px; color: var(--muted); font: italic 17px 'Cormorant Garamond', serif; }
+
+h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    color: #65496e;
+    font-size: 30px;
+}
+
+.subtitle {
+    color: #88768a;
+    margin-bottom: 30px;
+}
+
+button {
+    border: 1px solid #92709a;
+    background: #705479;
+    color: #fff9ef;
+    padding: 13px 25px;
+    margin: 7px;
+    border-radius: 30px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #92709a;
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.rules {
+    background: #eee4d7;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #d4c0a5;
+    border-radius: 10px;
+    text-align: left;
+    line-height: 1.8;
+}
+
 .score-panel {
-  padding: 19px 16px 17px; background: #e9dce8;
-  border: 1px solid #cbb7ce; border-radius: 5px;
+    background: #eee4d7;
+    border: 1px solid #d4c0a5;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
 }
-.remaining-label { margin: 0; color: var(--purple); font-size: 10px; letter-spacing: 2.5px; }
-.remaining { margin: 1px 0 12px; color: var(--deep); font: 600 60px/.95 'Cormorant Garamond', serif; }
-.counter-pile { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; min-height: 22px; }
-.counter {
-  width: 19px; height: 19px; border-radius: 50%;
-  background: radial-gradient(circle at 32% 28%, #cbb4d0, #76557f 65%, #4c3158);
-  border: 1px solid #5b3d64; box-shadow: 0 2px 3px rgba(49,30,55,.22);
-  animation: pop .18s ease-out;
+
+.score-panel p {
+    letter-spacing: 2px;
+    font-size: 12px;
 }
-.status { min-height: 42px; margin: 19px 0 12px; color: var(--ink); font: 500 18px 'Cormorant Garamond', serif; }
-.actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-button { cursor: pointer; font: inherit; transition: transform .15s, background .15s, opacity .15s; }
-button:active { transform: translateY(1px); }
-.take-button {
-  padding: 12px 6px; color: #fff8ef; background: var(--plum);
-  border: 1px solid #392441; border-radius: 4px; font-weight: 600;
+
+#remaining {
+    font-size: 45px;
+    margin: 5px;
 }
-.take-button:hover:not(:disabled) { background: #684a72; transform: translateY(-2px); }
-.take-button:disabled { opacity: .35; cursor: not-allowed; }
-.bottom-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 19px; }
-.turn-label { color: var(--muted); font-size: 9px; letter-spacing: 1.7px; }
-.turn-label b { color: var(--gold); padding: 0 5px; }
-.restart-button {
-  padding: 8px 12px; color: var(--plum); background: transparent;
-  border: 1px solid #bda8bd; border-radius: 4px; font-size: 12px;
+
+#flower-pile {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 20px;
+    min-height: 45px;
 }
-.restart-button:hover { background: #eadfea; }
-.result { margin: 14px 0 0; color: var(--plum); font: 600 24px 'Cormorant Garamond', serif; }
-.rule {
-  margin-top: 22px; padding-top: 15px; border-top: 1px solid #d8c9b8;
-  color: var(--muted); font: italic 15px/1.45 'Cormorant Garamond', serif;
+
+.flower {
+    font-size: 30px;
+    animation: bloom 0.3s ease;
 }
-.rule-title { display: block; margin-bottom: 4px; color: var(--gold); font: 600 9px 'DM Sans', sans-serif; letter-spacing: 2px; }
-footer { margin-top: 20px; font-size: 9px; }
-@keyframes pop { from { transform: scale(.6); opacity: .4; } to { transform: scale(1); opacity: 1; } }
-@media (max-width: 420px) { .game-card { padding: 29px 22px 22px; } .bottom-row { align-items: flex-start; } }
+
+@keyframes bloom {
+    from {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#status {
+    color: #705479;
+    font-weight: 600;
+}
+
+#result {
+    color: #705479;
+}
+
+footer {
+    margin-top: 30px;
+    color: #a38b9e;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 500px) {
+    .game-card {
+        padding: 30px 15px;
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+}
