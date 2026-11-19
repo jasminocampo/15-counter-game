@@ -1,86 +1,157 @@
-const startingCounters = 15;
-let counters = startingCounters;
+
+const homeScreen = document.getElementById("home-screen");
+const instructionsScreen = document.getElementById("instructions-screen");
+const turnScreen = document.getElementById("turn-screen");
+const gameScreen = document.getElementById("game-screen");
+
+const flowerPile = document.getElementById("flower-pile");
+const remainingText = document.getElementById("remaining");
+const statusText = document.getElementById("status");
+const resultText = document.getElementById("result");
+
+let flowers = 15;
 let gameOver = false;
+let computerTurn = false;
 
-const remainingEl = document.getElementById('remaining');
-const pileEl = document.getElementById('counter-pile');
-const statusEl = document.getElementById('status');
-const resultEl = document.getElementById('result');
-const takeButtons = document.querySelectorAll('.take-button');
-const restartButton = document.getElementById('restart');
+function showScreen(screen) {
+    homeScreen.hidden = true;
+    instructionsScreen.hidden = true;
+    turnScreen.hidden = true;
+    gameScreen.hidden = true;
 
-function render() {
-  remainingEl.textContent = counters;
-  pileEl.innerHTML = '';
-  for (let i = 0; i < counters; i++) {
-    const counter = document.createElement('span');
-    counter.className = 'counter';
-    pileEl.appendChild(counter);
-  }
-  takeButtons.forEach(button => {
-    const amount = Number(button.dataset.take);
-    button.disabled = gameOver || amount > counters;
-  });
+    screen.hidden = false;
 }
 
-function finish(winner) {
-  gameOver = true;
-  statusEl.textContent = 'The round is complete.';
-  resultEl.hidden = false;
-  resultEl.textContent = winner === 'player' ? 'You won! Well played.' : 'Computer wins this round.';
-  render();
-}
+document.getElementById("how-to-play").onclick = () => {
+    showScreen(instructionsScreen);
+};
 
-function computerTurn() {
-  if (counters <= 0 || gameOver) return;
+document.getElementById("play-button").onclick = () => {
+    showScreen(turnScreen);
+};
 
-  // Try to leave a multiple of 4 for the player.
-  let computerTakes = counters % 4;
-  if (computerTakes === 0) computerTakes = 1;
-  computerTakes = Math.min(computerTakes, 3, counters);
+document.getElementById("back-home").onclick = () => {
+    showScreen(homeScreen);
+};
 
-  statusEl.textContent = `Computer is thinking...`;
-  takeButtons.forEach(button => button.disabled = true);
+document.getElementById("play-now").onclick = () => {
+    showScreen(turnScreen);
+};
 
-  window.setTimeout(() => {
-    counters -= computerTakes;
-    render();
+function updateGarden() {
+    remainingText.textContent = flowers;
+    flowerPile.innerHTML = "";
 
-    if (counters === 0) {
-      finish('computer');
-    } else {
-      statusEl.textContent = `Computer took ${computerTakes}. Your turn!`;
-      render();
+    for (let i = 0; i < flowers; i++) {
+        const flower = document.createElement("span");
+        flower.className = "flower";
+        flower.textContent = "🌸";
+        flowerPile.appendChild(flower);
     }
-  }, 650);
 }
 
-function playerTurn(amount) {
-  if (gameOver || amount < 1 || amount > 3 || amount > counters) return;
+function startGame(playerStarts) {
+    flowers = 15;
+    gameOver = false;
+    computerTurn = !playerStarts;
 
-  counters -= amount;
-  render();
+    showScreen(gameScreen);
+    resultText.hidden = true;
 
-  if (counters === 0) {
-    finish('player');
-    return;
-  }
+    updateGarden();
 
-  statusEl.textContent = `You took ${amount}. Computer's turn...`;
-  computerTurn();
+    if (playerStarts) {
+        statusText.textContent = "Your turn! Pick your flowers.";
+        enableButtons(true);
+    } else {
+        statusText.textContent = "Computer is picking first...";
+        enableButtons(false);
+        setTimeout(computerMove, 1000);
+    }
 }
 
-takeButtons.forEach(button => {
-  button.addEventListener('click', () => playerTurn(Number(button.dataset.take)));
+document.getElementById("player-first").onclick = () => {
+    startGame(true);
+};
+
+document.getElementById("computer-first").onclick = () => {
+    startGame(false);
+};
+
+function enableButtons(enabled) {
+    document.querySelectorAll(".take-button").forEach(button => {
+        const amount = Number(button.dataset.take);
+
+        button.disabled = !enabled || gameOver || amount > flowers;
+    });
+}
+
+document.querySelectorAll(".take-button").forEach(button => {
+    button.onclick = () => {
+        if (gameOver || computerTurn) return;
+
+        const amount = Number(button.dataset.take);
+
+        if (amount > flowers) return;
+
+        flowers -= amount;
+        updateGarden();
+
+        if (flowers === 0) {
+            endGame("You picked the last flower. You win!");
+            return;
+        }
+
+        computerTurn = true;
+        statusText.textContent = "Computer is picking...";
+        enableButtons(false);
+
+        setTimeout(computerMove, 1000);
+    };
 });
 
-restartButton.addEventListener('click', () => {
-  counters = startingCounters;
-  gameOver = false;
-  resultEl.hidden = true;
-  resultEl.textContent = '';
-  statusEl.textContent = 'Your turn. Choose how many counters to take.';
-  render();
-});
+function computerMove() {
+    if (gameOver) return;
 
-render();
+    let amount = flowers % 4;
+
+    if (amount === 0) {
+        amount = Math.min(1, flowers);
+    }
+
+    amount = Math.min(amount, 3, flowers);
+
+    flowers -= amount;
+    updateGarden();
+
+    if (flowers === 0) {
+        endGame("Computer picked the last flower. Computer wins!");
+        return;
+    }
+
+    computerTurn = false;
+    statusText.textContent =
+        "Computer picked " + amount + " flower(s). Your turn!";
+
+    enableButtons(true);
+}
+
+function endGame(message) {
+    gameOver = true;
+    computerTurn = false;
+
+    statusText.textContent = "The garden game is over!";
+    resultText.textContent = message;
+    resultText.hidden = false;
+
+    enableButtons(false);
+}
+
+document.getElementById("restart").onclick = () => {
+    flowers = 15;
+    gameOver = false;
+    computerTurn = false;
+    showScreen(turnScreen);
+};
+
+updateGarden();
