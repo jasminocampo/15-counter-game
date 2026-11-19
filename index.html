@@ -2,7 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Flower Garden Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="game-card">
+
+    <!-- HOME PAGE -->
+    <section id="home-screen">
+        <p class="ornament">✿ THE LITTLE FLOWER GARDEN ✿</p>
+        <h1>15 Flower Game</h1>
+        <p class="subtitle">
+            A fun little strategy game in a blooming garden.
+        </p>
+
+        <button id="how-to-play">How to Play</button>
+        <button id="play-button">Play</button>
+    </section>
+
+    <!-- INSTRUCTIONS PAGE -->
+    <section id="instructions-screen" hidden>
+        <p class="ornament">✿ GARDEN GUIDE ✿</p>
+        <h1>How to Play</h1>
+
+        <div class="rules">
+            <p>1. There are 15 flowers in the garden.</p>
+            <p>2. You can pick 1, 2, or 3 flowers per turn.</p>
+            <p>3. The computer will also pick flowers.</p>
+            <p>4. Take turns picking flowers.</p>
+            <p>5. Whoever picks the last flower wins!</p>
+        </div>
+
+        <button id="back-home">Back</button>
+        <button id="play-now">Play Now</button>
+    </section>
+
+    <!-- TURN SELECTION PAGE -->
+    <section id="turn-screen" hidden>
+        <p class="ornament">✿ BEFORE THE GAME ✿</p>
+        <h1>Who Goes First?</h1>
+        <p class="subtitle">Choose who will pick the first flower.</p>
+
+        <button id="player-first">Player First</button>
+        <button id="computer-first">Computer First</button>
+    </section>
+
+    <!-- GAME PAGE -->
+    <section id="game-screen" hidden>
+        <p class="ornament">✿ THE FLOWER GARDEN ✿</p>
+        <h1>Pick Your Flowers</h1>
+
+        <div class="score-panel">
+            <p>FLOWERS REMAINING</p>
+            <h2 id="remaining">15</h2>
+            <div id="flower-pile"></div>
+        </div>
+
+        <p id="status">Your turn!</p>
+
+        <div class="actions">
+            <button class="take-button" data-take="1">Pick 1</button>
+            <button class="take-button" data-take="2">Pick 2</button>
+            <button class="take-button" data-take="3">Pick 3</button>
+        </div>
+
+        <h2 id="result" hidden></h2>
+
+        <button id="restart">Play Again</button>
+    </section>
+
+    <footer>✧ LET YOUR STRATEGY BLOOM ✧</footer>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
+ name="viewport" content="width=device-width, initial-scale=1.0">
   <title>15 Counter Game</title>
   <link rel="stylesheet" href="style.css">
 </head>
